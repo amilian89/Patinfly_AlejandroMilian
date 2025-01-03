@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
+
+class Authentication: ObservableObject {
+    @Published var isValidated: Bool = false
+    
+    func updateValidation(success: Bool){
+        withAnimation{
+            isValidated = success
+        }
+    }
+}

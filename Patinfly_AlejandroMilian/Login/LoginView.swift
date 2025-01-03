@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var labelText: String = "No selected"
     
     @StateObject private var loginModelView = LoginViewModel()
     
+    @EnvironmentObject var authentication: Authentication
+    
     var body: some View {
         VStack(spacing: 20) {
-            // Logo or Image at the top
             Image(systemName: "scooter")
                 .resizable()
                 .scaledToFit()
@@ -22,11 +22,11 @@ struct LoginView: View {
                 .padding(.top, 60)
                 .foregroundColor(.blue)
             
-            Text("Welcome Back")
+            Text("Patinfly App")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
             
-            Text("Sign in to continue")
+            Text("Inicia sessió per a continuar")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -53,8 +53,9 @@ struct LoginView: View {
                 }
                 
                 Button("Sign in") {
-                    loginModelView.login { success in
-                        labelText = "Selected"
+                    loginModelView.login{
+                        success in
+                        authentication.updateValidation(success: success)
                     }
                 }
                 .disabled(loginModelView.loginDisable)
@@ -65,12 +66,6 @@ struct LoginView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
                 
-                TextField("", text: $labelText)
-                    .padding(.horizontal, 80)
-                    .padding(.vertical, 20)
-                    .autocapitalization(.none)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .disabled(loginModelView.showProgressView)
             }
         }
         .padding(.horizontal, 60)
