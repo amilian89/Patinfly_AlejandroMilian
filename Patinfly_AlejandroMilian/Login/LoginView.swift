@@ -65,7 +65,8 @@ struct LoginView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.horizontal)
-                
+                .alert(item: $loginModelView.error){ error in Alert(title: Text("Error validació"), message: Text(error.localizedDescription))
+                }
             }
         }
         .padding(.horizontal, 60)

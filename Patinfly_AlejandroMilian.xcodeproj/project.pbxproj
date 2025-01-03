@@ -79,6 +79,7 @@
 				A9E3576E2D27F3F3000F175B /* Patinfly_AlejandroMilianTests */,
 				A9E357782D27F3F4000F175B /* Patinfly_AlejandroMilianUITests */,
 				A9E3575C2D27F3F1000F175B /* Products */,
+				A9E357C82D28471F000F175B /* Preview Content */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +91,13 @@
 				A9E357752D27F3F4000F175B /* Patinfly_AlejandroMilianUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A9E357C82D28471F000F175B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
