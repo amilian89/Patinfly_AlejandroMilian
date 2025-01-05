@@ -8,13 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var scooters: Scooters = Scooters(scooters: [])
     
     var body: some View {
-        VStack{
-            Text("The user is previously autenticated !")
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(scooters.scooters) { scooter in
+                        ScooterRowView(name: scooter.name, uuid: scooter.state, distance: "10", battery_level: scooter.battery_level)
+                    }
+                }
+            }
+            .navigationTitle("Scooters")
+        }
+        .onAppear {
+            if let url = Bundle.main.url(forResource: "scooters", withExtension: "json") {
+                do {
+                    let jsonData = try Data(contentsOf: url)
+                    print(jsonData)
+                    let decoder = JSONDecoder()
+                    print(try decoder.decode(Scooters.self, from: jsonData))
+                    scooters = try decoder.decode(Scooters.self, from: jsonData)
+                } catch {
+                    print(error)
+                }
+            }
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

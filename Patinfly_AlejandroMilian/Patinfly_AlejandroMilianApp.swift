@@ -18,7 +18,8 @@ struct Patinfly_AlejandroMilianApp: App {
                 ContentView().environmentObject(authentication)
             }
             else{
-                LoginView().environmentObject(authentication)
+                SplashScreen().environmentObject(authentication)
+                //LoginView().environmentObject(authentication)
             }
         }
     }
