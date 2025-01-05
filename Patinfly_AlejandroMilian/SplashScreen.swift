@@ -18,7 +18,7 @@ struct SplashScreen: View {
     var body: some View {
         if self.isActive {
             if authentication.isValidated {
-                ContentView()
+                MenuTabView()
             } else {
                 LoginView()
             }

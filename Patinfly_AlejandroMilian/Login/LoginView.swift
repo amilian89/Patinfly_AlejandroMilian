@@ -52,7 +52,7 @@ struct LoginView: View {
                     ProgressView()
                 }
                 
-                HStack {
+                VStack {
                     Button(action: {
                         acceptedTerms.toggle()
                     }) {
@@ -63,7 +63,7 @@ struct LoginView: View {
                         }
                     }
                     .buttonStyle(PlainButtonStyle())
-                    Spacer()
+                    Divider()
                     Button("Condicions d'ús") {
                         showTermsView.toggle()
                     }
@@ -73,7 +73,7 @@ struct LoginView: View {
                 
                 Button("Sign in") {
                     loginModelView.login { success in
-                        authentication.updateValidation(success: success)
+                        authentication.updateValidation(success: success, email: loginModelView.credentials.email)
                     }
                 }
                 .disabled(loginModelView.loginDisable || !acceptedTerms)
@@ -97,6 +97,7 @@ struct LoginView: View {
 
 struct TermsView: View {
     @Binding var acceptedTerms: Bool
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(spacing: 20) {
@@ -112,6 +113,7 @@ struct TermsView: View {
             
             Button("Acceptar i continuar") {
                 acceptedTerms = true
+                dismiss()
             }
             .padding()
             .background(Color.blue)

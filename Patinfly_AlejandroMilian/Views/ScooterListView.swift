@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ScooterListView: View {
     @State var scooters: Scooters = Scooters(scooters: [])
     
     var body: some View {
@@ -15,7 +15,9 @@ struct ContentView: View {
             VStack {
                 List {
                     ForEach(scooters.scooters) { scooter in
-                        ScooterRowView(name: scooter.name, uuid: scooter.state, distance: "10", battery_level: scooter.battery_level)
+                        NavigationLink(destination: ScooterDetailView(scooter: scooter)){
+                            ScooterRowView(name: scooter.name, uuid: scooter.state, distance: "10", battery_level: scooter.battery_level)
+                        }
                     }
                 }
             }
@@ -38,8 +40,8 @@ struct ContentView: View {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
+struct ScooterListView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ScooterListView()
     }
 }

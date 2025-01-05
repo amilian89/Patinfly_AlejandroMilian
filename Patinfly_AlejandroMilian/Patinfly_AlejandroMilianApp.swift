@@ -15,7 +15,7 @@ struct Patinfly_AlejandroMilianApp: App {
     var body: some Scene {
         WindowGroup {
             if authentication.isValidated {
-                ContentView().environmentObject(authentication)
+                MenuTabView().environmentObject(authentication)
             }
             else{
                 SplashScreen().environmentObject(authentication)
