@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>La ubicació s'utilitza per localitzar l'usuari i els patinets. L'usuari pot veure els patinets més propers quan s'autoritza la ubicació.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>La ubicació s'utilitza per localitzar l'usuari i els patinets. L'usuari pot veure els patinets més propers quan s'autoritza la ubicació.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>La ubicació s'utilitza per localitzar l'usuari i els patinets. L'usuari pot veure els patinets més propers quan s'autoritza la ubicació.</string>
+</dict>
+</plist>
+

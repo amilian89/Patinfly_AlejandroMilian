@@ -6,24 +6,23 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ScooterDetailView: View {
+    
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 41.116444, longitude: 1.124695), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+
     var scooter: Scooter
     
     var body: some View {
+        let places = [Place(name: "Position 1", latitude: 31.21, longitude: 120.50)]
         VStack(spacing: 20) {
             
-            // Mapa (Preparado para P2)
-            ZStack {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(height: 200)
-                    .cornerRadius(15)
-                
-                Text("Mapa aquí")
-                    .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
+            // Mapa (P2)
+            Map(coordinateRegion: $region, showsUserLocation: true,  annotationItems: places){ place in
+                MapMarker(coordinate: place.coordinate)
+            }.frame(height: 300)
+            .cornerRadius(15)
             
             // Detalle del Scooter
             VStack(alignment: .leading, spacing: 15) {
@@ -86,5 +85,13 @@ struct ScooterDetailView: View {
             
         }
         .navigationTitle("Scooter Detail")
+        .onAppear(){
+            LocationManager.shared.getUserLocation{ location in
+                DispatchQueue.main.async{
+                    region.center.latitude = location.coordinate.latitude
+                    region.center.longitude = location.coordinate.longitude
+                }
+            }
+        }
     }
 }
