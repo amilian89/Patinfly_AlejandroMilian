@@ -42,6 +42,40 @@ struct SplashScreen: View {
                     withAnimation {
                         self.isActive = true
                     }
+                    
+                    //Codigo P2
+                    //Comprobacion del status del servidor y scooters
+                    APIService.checkServerStatusWithCompletion(){
+                        result in
+                        print (result)
+                    }
+                    
+                    APIService.scooterListWithCompletion(withToken: APIAccess.token) { result in
+                        switch result {
+                        case .success(let scooters):
+                            if let encodedData = try? JSONEncoder().encode(scooters),
+                               let dataString = String(data: encodedData, encoding: .utf8) {
+                                print("Scooter list response: \(dataString)")
+                            } else {
+                                print("Failed to encode scooters to JSON string")
+                            }
+                        case .failure(let error):
+                            print("Error fetching scooters: \(error.localizedDescription)")
+                        }
+                    }
+
+                    APIService.checkServerStatusWithCompletion(){(result: Result<ServerStatus, NetworkError>) in
+                        if ((try? result.get().status) != nil){
+                            APIService.scooterList(withToken: APIAccess.token)
+                            APIService.scooterListWithCompletion(withToken: APIAccess.token){(result: Result<ScootersServer, NetworkError>) in
+                                do{
+                                    print("PRUEBA REALIZADA CORRECTAMENTE")
+                                }catch let parseError{
+                                    print("JSON Error \(parseError.localizedDescription)")
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
