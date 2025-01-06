@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SplashScreen: View {
     
     @StateObject var authentication = Authentication()
+    @Environment(\.modelContext) private var modelContext
     
     @State private var isActive = false
     @State private var size = 0.8
@@ -63,13 +65,14 @@ struct SplashScreen: View {
                             print("Error fetching scooters: \(error.localizedDescription)")
                         }
                     }
-
+                    
                     APIService.checkServerStatusWithCompletion(){(result: Result<ServerStatus, NetworkError>) in
                         if ((try? result.get().status) != nil){
                             APIService.scooterList(withToken: APIAccess.token)
                             APIService.scooterListWithCompletion(withToken: APIAccess.token){(result: Result<ScootersServer, NetworkError>) in
                                 do{
-                                    print("PRUEBA REALIZADA CORRECTAMENTE")
+                                    let scootersServer: ScootersServer = try result.get()
+                                    saveScootersToSwiftData(scooters: scootersServer.scooters)
                                 }catch let parseError{
                                     print("JSON Error \(parseError.localizedDescription)")
                                 }
@@ -78,6 +81,31 @@ struct SplashScreen: View {
                     }
                 }
             }
+        }
+    }
+    
+    private func saveScootersToSwiftData(scooters: [ScooterServer]) {
+        for scooterServer in scooters {
+            let scooter = Scooter(
+                uuid: scooterServer.uuid,
+                name: scooterServer.name,
+                longitude: scooterServer.longitude,
+                latitude: scooterServer.latitude,
+                battery_level: scooterServer.battery_level,
+                meters_use: scooterServer.meters_use,
+                date_last_maintenance: scooterServer.date_last_maintenance,
+                date_create: scooterServer.date_create,
+                state: scooterServer.state,
+                vacant: scooterServer.vacant
+            )
+            modelContext.insert(scooter)
+        }
+        
+        do {
+            try modelContext.save()
+            print("Datos guardados en SwiftData correctamente.")
+        } catch {
+            print("Error al guardar datos en SwiftData: \(error.localizedDescription)")
         }
     }
 }

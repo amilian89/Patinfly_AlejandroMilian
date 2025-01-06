@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Patinfly_AlejandroMilianApp: App {
@@ -22,5 +23,6 @@ struct Patinfly_AlejandroMilianApp: App {
                 //LoginView().environmentObject(authentication)
             }
         }
+        .modelContainer(for: Scooter.self)
     }
 }
