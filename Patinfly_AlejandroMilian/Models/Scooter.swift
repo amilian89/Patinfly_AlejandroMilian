@@ -9,7 +9,7 @@ import SwiftData
 
 @Model
 class Scooter {
-    @Attribute(.unique) var uuid: String
+    var uuid: String
     var name: String
     var longitude: Float
     var latitude: Float

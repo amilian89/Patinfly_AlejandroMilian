@@ -8,8 +8,8 @@
 import Foundation
 
 struct RentStart: Codable{
-    let uuid: String
-    let date_start: String
+    let uuid: String?
+    let date_start: String?
     let date_stop: String?
 }
 
@@ -17,7 +17,7 @@ struct RentStart: Codable{
 struct ServerRent: Codable {
     let code:Int
     let msg: String
-    let rent: RentStart
+    let rent: RentStart?
     let timestamp: String
     let version: Int?
 }

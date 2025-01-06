@@ -11,7 +11,7 @@ import MapKit
 struct ScooterDetailView: View {
     
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 41.116444, longitude: 1.124695), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
-
+    
     var scooter: Scooter
     
     var body: some View {
@@ -22,7 +22,7 @@ struct ScooterDetailView: View {
             Map(coordinateRegion: $region, showsUserLocation: true,  annotationItems: places){ place in
                 MapMarker(coordinate: place.coordinate)
             }.frame(height: 300)
-            .cornerRadius(15)
+                .cornerRadius(15)
             
             // Detalle del Scooter
             VStack(alignment: .leading, spacing: 15) {
@@ -81,8 +81,32 @@ struct ScooterDetailView: View {
             
             Spacer()
             
-            // Botón para alquilar (TODO para P2)
-            
+            // Botón para alquilar (P2)
+            HStack{
+                Button(action: {
+                    startRent(uuid: scooter.uuid)
+                }) {
+                    Text("Iniciar")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .padding(.horizontal)
+                
+             Button(action: {
+                    stopRent(uuid: scooter.uuid)
+                }) {
+                    Text("Finalizar")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .padding(.horizontal)
+            }
         }
         .navigationTitle("Scooter Detail")
         .onAppear(){
@@ -92,6 +116,20 @@ struct ScooterDetailView: View {
                     region.center.longitude = location.coordinate.longitude
                 }
             }
+        }
+    }
+    
+    func startRent(uuid: String!){
+        APIService.startRent(withToken: APIAccess.token, uuid: uuid){
+            result in
+            print (result)
+        }
+    }
+    
+    func stopRent(uuid: String!){
+        APIService.stopRent(withToken: APIAccess.token, uuid: uuid){
+            result in
+            print (result)
         }
     }
 }
