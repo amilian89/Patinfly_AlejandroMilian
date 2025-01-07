@@ -86,6 +86,10 @@ struct SplashScreen: View {
     
     private func saveScootersToSwiftData(scooters: [ScooterServer]) {
         for scooterServer in scooters {
+            let fetchRequest = FetchDescriptor<Scooter>(predicate: #Predicate { $0.uuid == scooterServer.uuid })
+            if let existingScooter = try? modelContext.fetch(fetchRequest), !existingScooter.isEmpty {
+                continue
+            }
             let scooter = Scooter(
                 uuid: scooterServer.uuid,
                 name: scooterServer.name,
@@ -100,7 +104,6 @@ struct SplashScreen: View {
             )
             modelContext.insert(scooter)
         }
-        
         do {
             try modelContext.save()
             print("Datos guardados en SwiftData correctamente.")
@@ -109,7 +112,6 @@ struct SplashScreen: View {
         }
     }
 }
-
 struct SplashSCreen_Previews: PreviewProvider {
     static var previews: some View {
         SplashScreen().previewInterfaceOrientation(.portrait)

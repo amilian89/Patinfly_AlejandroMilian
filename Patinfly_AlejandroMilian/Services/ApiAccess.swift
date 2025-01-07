@@ -11,12 +11,12 @@ struct APIAccess {
     
     static let scheme = "https"
     static let host = "patinfly.com"
-    static let token: String = "TxSo9LQvy8Fp4k0ItsBAZ3RUlEdmGenJj5KDcbif2425"
+    static let token: String = "24IXAom45ULbs13hSQWVixrYuF2E9qjzCZKlt8vN1123"
     static let urlServer: String = "https://patinfly.com/"
     static let pathStatus: String = "/endpoints/status/"
     static let pathScooter: String = "/endpoints/scooter"
-    static let pathScooterStart: String = "/endpoints/rent/start"
-    static let pathScooterStop: String = "/endpoints/rent/stop"
+    static let pathScooterStart: String = "/endpoints/rent/start/ea1783c8-d480-11ec-91c7-ecf4bbcc40f8"
+    static let pathScooterStop: String = "/endpoints/rent/stop/ea1783c8-d480-11ec-91c7-ecf4bbcc40f8"
     
     static func scooters() -> URLComponents{
         var urlServerScooters: URLComponents = APIAccess.baseURL()
@@ -37,15 +37,15 @@ struct APIAccess {
         return baseServerURL
     }
     
-    static func scootersStartRent(scooterUUID: String) -> URLComponents{
+    static func scootersStartRent() -> URLComponents{
         var urlServerScooters: URLComponents = APIAccess.baseURL()
-        urlServerScooters.path = "\(APIAccess.pathScooterStart)/\(scooterUUID)"
+        urlServerScooters.path = APIAccess.pathScooterStart
         return urlServerScooters
     }
     
-    static func scootersStopRent(scooterUUID: String) -> URLComponents{
+    static func scootersStopRent() -> URLComponents{
         var urlServerScooters: URLComponents = APIAccess.baseURL()
-        urlServerScooters.path = "\(APIAccess.pathScooterStop)/\(scooterUUID)"
+        urlServerScooters.path = APIAccess.pathScooterStop
         return urlServerScooters
     }
     

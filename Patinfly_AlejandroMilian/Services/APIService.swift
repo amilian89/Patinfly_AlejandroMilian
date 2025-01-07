@@ -148,7 +148,7 @@ class APIService{
         //Metodos start and stop rent 
         
         static func startRent(withToken: String,uuid: String, completion: @escaping (Result<ServerRent, NetworkError>) -> Void){
-            let callURL = APIAccess.scootersStartRent(scooterUUID: uuid)
+            let callURL = APIAccess.scootersStartRent()
             
             var request = URLRequest(url: (callURL.url)!)
             request.httpMethod = "GET"
@@ -175,7 +175,7 @@ class APIService{
         }
         
         static func stopRent(withToken: String,uuid: String, completion: @escaping (Result<ServerRent, NetworkError>) -> Void){
-            let callURL = APIAccess.scootersStopRent(scooterUUID: uuid)
+            let callURL = APIAccess.scootersStopRent()
             
             var request = URLRequest(url: (callURL.url)!)
             request.httpMethod = "GET"

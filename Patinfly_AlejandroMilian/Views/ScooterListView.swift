@@ -12,11 +12,19 @@ struct ScooterListView: View {
     
     @Query private var scooters: [Scooter]
     
+    var uniqueScooters: [Scooter] {
+        var seenUUIDs = Set<String>()
+        return scooters.filter {
+            scooter in guard !seenUUIDs.contains(scooter.uuid) else { return false };                 seenUUIDs.insert(scooter.uuid)
+            return true
+        }
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(scooters) { scooter in
+                    ForEach(uniqueScooters) { scooter in
                         NavigationLink(destination: ScooterDetailView(scooter: scooter)){
                             ScooterRowView(name: scooter.name, uuid: scooter.state, distance: "10", battery_level: scooter.battery_level)
                         }
