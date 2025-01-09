@@ -71,7 +71,7 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 
-                Button("Sign in") {
+                Button("Entrar") {
                     loginModelView.login { success in
                         authentication.updateValidation(success: success, email: loginModelView.credentials.email)
                     }
@@ -107,8 +107,28 @@ struct TermsView: View {
                 .padding()
             
             ScrollView {
-                Text("Aquí van les condicions d'ús de Patinfly. Aquestes són les normes i directrius...")
-                    .padding()
+                Text("""
+        Benvingut/da a la nostra aplicació de reserves de patinets. Abans d'utilitzar els nostres serveis, si us plau llegeix atentament les següents condicions d'ús:
+
+        1. Ús Responsable:
+        - L'usuari es compromet a fer un ús responsable i respectuós amb les normes de trànsit.
+        - Està prohibit l'ús dels patinets sota els efectes de l'alcohol o drogues.
+
+        2. Registre:
+        - És obligatori registrar-se amb dades reals i actualitzades.
+        - L'usuari ha de ser major d'edat o disposar d'autorització dels seus tutors legals.
+
+        3. Pagaments i Tarifes:
+        - Les tarifes es cobraran segons el temps d'ús del patinet.
+        - Qualsevol impagament podrà resultar en la suspensió del servei.
+
+        4. Responsabilitat:
+        - L'usuari és responsable de qualsevol dany causat al patinet durant el seu ús.
+        - L'empresa no es fa responsable dels danys personals o materials que puguin ocórrer durant l'ús del servei.
+
+        En fer ús d'aquesta aplicació, acceptes totes les condicions esmentades anteriorment.
+        """)
+                .padding()
             }
             
             Button("Acceptar i continuar") {

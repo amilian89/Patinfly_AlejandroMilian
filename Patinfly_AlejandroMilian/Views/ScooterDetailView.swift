@@ -14,16 +14,16 @@ struct ScooterDetailView: View {
     
     var scooter: Scooter
     
-    // Estados para manejar el pop-up
+    // Alertas de confirmación para iniciar/finalizar reserva
     @State private var showAlert = false
     @State private var alertMessage = ""
-    
+
     var body: some View {
         let places = [Place(name: "Position 1", latitude: 31.21, longitude: 120.50)]
         
         VStack(spacing: 20) {
             
-            // Mapa (P2)
+            // Mapa práctica 2
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: places) { place in
                 MapMarker(coordinate: place.coordinate)
             }
@@ -87,7 +87,7 @@ struct ScooterDetailView: View {
             
             Spacer()
             
-            // Botón para alquilar (P2)
+            // Botones para alquilar práctica 2
             HStack {
                 Button(action: {
                     startRent(uuid: scooter.uuid)
@@ -111,7 +111,7 @@ struct ScooterDetailView: View {
                 Button(action: {
                     stopRent(uuid: scooter.uuid)
                 }) {
-                    Text("Finalizar")
+                    Text("Finalitzar")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.red)
@@ -137,7 +137,6 @@ struct ScooterDetailView: View {
                 }
             }
         }
-        // Configuración del alert
        
     }
     
@@ -147,10 +146,16 @@ struct ScooterDetailView: View {
             print(result)
             DispatchQueue.main.async {
                 switch result {
-                case .success:
-                    alertMessage = "Alquiler iniciado con éxito"
+                case .success(let serverResponse):
+                    if serverResponse.code == 200 {
+                        alertMessage = "Lloguer iniciat amb èxit"
+                    } else if serverResponse.code == 405 {
+                        alertMessage = "Aquest patinet ja està reservat"
+                    } else {
+                        alertMessage = "Error inesperat: \(serverResponse.msg)"
+                    }
                 case .failure:
-                    alertMessage = "Error al iniciar el alquiler"
+                    alertMessage = "Error al inicialitzar el lloguer"
                 }
                 showAlert = true
             }
@@ -163,15 +168,23 @@ struct ScooterDetailView: View {
             print(result)
             DispatchQueue.main.async {
                 switch result {
-                case .success:
-                    alertMessage = "Alquiler finalizado con éxito"
+                case .success(let serverResponse):
+                    if serverResponse.code == 200 {
+                        alertMessage = "Lloguer finalitzat amb èxit"
+                    } else if serverResponse.code == 405 {
+                        alertMessage = "Aquest patinet no està reservat"
+                    } else {
+                        alertMessage = "Error inesperat: \(serverResponse.msg)"
+                    }
                 case .failure:
-                    alertMessage = "Error al finalizar el alquiler"
+                    alertMessage = "Error al finalitzar el lloguer"
                 }
                 showAlert = true
             }
         }
     }
+
+
 }
 
 
